@@ -65,18 +65,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
 .logo-band{position:relative;z-index:1;padding-block:var(--s4);border-block:1px solid var(--line)}
 .logo-band p{margin:0 0 var(--s3);text-align:center;font:500 .74rem/1.4 var(--mono);text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
 /* the logos ride a 3D ring that turns a full 360°, like a broadcast logo carousel */
-.ring{position:relative;height:9rem;perspective:1600px;perspective-origin:50% 30%;overflow:hidden;
+.ring{position:relative;height:10rem;perspective:2400px;perspective-origin:50% 0%;overflow:hidden;--R:600px;--ang:0deg;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.ring-track{list-style:none;margin:0;padding:0;position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.ring-track{list-style:none;margin:0;padding:0;position:absolute;left:50%;top:42%;width:0;height:0;transform-style:preserve-3d;will-change:transform;
+  transform:translateZ(calc(var(--R) * -1)) rotateX(-5deg) rotateY(calc(var(--ang) * -1))}
 .ring-track li{position:absolute;left:0;top:0;display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;white-space:nowrap;
-  background:var(--surface-solid);border:1px solid var(--line);color:var(--ink);transform-style:preserve-3d;
+  background:var(--surface-solid);border:1px solid var(--line);color:var(--ink);
+  transform:translate(-50%,-50%) rotateY(var(--a)) translateZ(var(--R));
   box-shadow:0 6px 18px color-mix(in srgb,var(--ink) 10%,transparent)}
 .ring-track li svg{width:1.6rem;height:1.6rem;fill:currentColor;flex:none}
 .ring-track li span{font:600 1rem/1 var(--body);letter-spacing:-.01em}
 .ring-track li.front{border-color:var(--accent);color:var(--accent)}
 .ring-floor{position:absolute;left:10%;right:10%;bottom:.6rem;height:1.2rem;border-radius:50%;
   background:radial-gradient(closest-side,color-mix(in srgb,var(--ink) 16%,transparent),transparent);pointer-events:none}
-@media (max-width:560px){.ring{height:7.5rem}.ring-track li{padding:.55rem .8rem}.ring-track li span{font-size:.88rem}.ring-track li svg{width:1.3rem;height:1.3rem}}
+@media (max-width:560px){.ring{height:8rem}.ring-track li{padding:.55rem .8rem}.ring-track li span{font-size:.88rem}.ring-track li svg{width:1.3rem;height:1.3rem}}
 .pre{transform:translateY(48px)}
 .lift{transition:transform .9s cubic-bezier(.2,.7,.2,1)}
 .diagram.in::after{content:"";position:absolute;top:2.1rem;bottom:0;width:30%;left:-30%;
@@ -1025,18 +1027,17 @@ nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
     var items = Array.from(track.children), n = items.length, step = 360/n, R = 0, angle = 0, last = performance.now(), hover = false, prevY = scrollY, kick = 0;
     function layout(){
       var widest = items.reduce(function(m, li){ return Math.max(m, li.offsetWidth); }, 0);
-      R = Math.max(ring.clientWidth*.42, (widest + 18) * n / (2*Math.PI));   // radius big enough that plates don't collide
-      items.forEach(function(li, i){ li.dataset.a = i*step; });
+      R = Math.max(ring.clientWidth*.42, (widest + 14) * n / (2*Math.PI));   // radius big enough that plates don't collide
+      ring.style.setProperty('--R', R.toFixed(1) + 'px');
+      items.forEach(function(li, i){ li.style.setProperty('--a', (i*step) + 'deg'); li.dataset.a = i*step; });
       place();
     }
     function place(){
-      track.style.transform = 'translateZ(' + (-R) + 'px) rotateX(-9deg) rotateY(' + (-angle).toFixed(2) + 'deg)';
+      ring.style.setProperty('--ang', angle.toFixed(2) + 'deg');
       var best = null, bestCos = -2;
       items.forEach(function(li){
-        var a = +li.dataset.a, c = Math.cos((a - angle) * Math.PI/180);
-        li.style.transform = 'translate(-50%,-50%) rotateY(' + a + 'deg) translateZ(' + R.toFixed(1) + 'px)';
-        li.style.opacity = (0.18 + 0.82*Math.max(0, c)).toFixed(3);       // plates fade as they swing round the back
-        li.style.filter = c < 0 ? 'blur(1px)' : '';
+        var c = Math.cos((+li.dataset.a - angle) * Math.PI/180);
+        li.style.opacity = (0.15 + 0.85*Math.max(0, c)).toFixed(3);      // plates fade as they swing round the back
         if(c > bestCos){ bestCos = c; best = li; }
       });
       items.forEach(function(li){ li.classList.toggle('front', li === best); });
@@ -1045,6 +1046,7 @@ nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
     ring.addEventListener('pointerleave', function(){ hover = false; });
     addEventListener('resize', layout);
     layout();
+    if(document.fonts) document.fonts.ready.then(layout);
     if(reduce) return;
     (function turn(now){
       var dt = Math.min(.05, (now - last)/1000); last = now;
