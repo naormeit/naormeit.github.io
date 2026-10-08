@@ -1048,13 +1048,14 @@ nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
     layout();
     if(document.fonts) document.fonts.ready.then(layout);
     if(reduce) return;
-    (function turn(now){
-      var dt = Math.min(.05, (now - last)/1000); last = now;
+    function turn(now){
+      var dt = Math.min(.05, (now - last)/1000); last = now; if(!(dt > 0)){ requestAnimationFrame(turn); return; }
       var dy = Math.abs(scrollY - prevY); prevY = scrollY;
       kick = Math.max(kick*.93, dy/dt*.06);                        // scrolling spins it faster, then it settles
       if(!hover){ angle = (angle + (14 + Math.min(kick, 160))*dt) % 360; place(); }
       requestAnimationFrame(turn);
-    })(last);
+    }
+    requestAnimationFrame(turn);
   })();
 
   addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
