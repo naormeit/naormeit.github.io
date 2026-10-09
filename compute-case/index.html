@@ -58,7 +58,11 @@ section{padding-block:clamp(44px,7vw,84px)}
 
 figure{margin:0}
 figure.diagram{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:clamp(16px,3vw,30px)}
+figure.diagram .diagram-scroll{overflow-x:auto}
 figure.diagram svg{width:100%;height:auto;display:block;overflow:visible}
+@media (max-width:640px){
+  figure.diagram svg{width:auto;min-width:640px;height:auto}
+}
 figcaption{margin-top:14px;font-size:.88rem;color:var(--fg-muted);max-width:68ch}
 .dsvg-box{fill:var(--surface-2);stroke:var(--border)}
 .dsvg-box-active{fill:var(--surface-2);stroke:var(--accent)}
@@ -172,6 +176,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
       <p class="lede">A laptop can run one small model, slowly. Past that, every test, every stress run and every evaluation has to go through a paid API with a rate limit on it. That gap is what a GPU allocation closes &mdash; for all five of these at once, not just one.</p>
     </div>
     <figure class="diagram">
+      <div class="diagram-scroll">
       <svg viewBox="0 0 1000 420" role="img" aria-label="Funnel diagram: five independent projects — Beacon, Aether AI, Loom Protocol, Sahayak AI and Anvay — all converge on the same shared ceiling of paid cloud APIs and a single consumer GPU; a DGX H200 allocation replaces that ceiling and fans out into local open models, agents tested at scale, and near-zero marginal cost per run.">
         <defs>
           <marker id="pf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -236,6 +241,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
         <text x="720" y="362" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Near-zero marginal cost</text>
         <text x="720" y="378" text-anchor="middle" font-size="9.5" class="dsvg-sub">per test, per receipt, per run</text>
       </svg>
+      </div>
       <figcaption>Five independently-built systems, each hitting the same wall from a different direction, all closed by the same allocation.</figcaption>
     </figure>
   </div>

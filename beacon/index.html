@@ -67,7 +67,13 @@ section{padding-block:clamp(48px,7vw,88px)}
 
 figure{margin:0}
 figure.diagram{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:clamp(16px,3vw,32px)}
+figure.diagram .diagram-scroll{overflow-x:auto}
 figure.diagram svg{width:100%;height:auto;display:block;overflow:visible}
+/* below ~640px a diagram scaled to fit the column shrinks its labels past legibility;
+   give it a fixed, readable pixel width instead and let the wrapper scroll sideways */
+@media (max-width:640px){
+  figure.diagram svg{width:auto;min-width:640px;height:auto}
+}
 figcaption{margin-top:14px;font-size:.88rem;color:var(--fg-muted);max-width:68ch}
 .dsvg-box{fill:var(--surface-2);stroke:var(--border)}
 .dsvg-box-active{fill:var(--surface-2);stroke:var(--accent)}
@@ -320,6 +326,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
       <p class="lede">Every draft task runs this loop locally, as many times as it needs to, before it ever reaches a paid, non-refundable check.</p>
     </div>
     <figure class="diagram">
+      <div class="diagram-scroll">
       <svg viewBox="0 0 1000 300" role="img" aria-label="Flow diagram: a draft task passes through static checks, a test matrix, a fairness review, and local agent rollouts; if the resulting solve rate is outside the target band the task loops back to be hardened, otherwise it is submitted for platform review.">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -371,6 +378,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <text x="935" y="176" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Review</text>
         </g>
       </svg>
+      </div>
       <figcaption>Every challenge loops through five local gates before a single paid, non-refundable check runs; a solve rate outside 10&ndash;40% sends it back to be hardened, not forward to be submitted.</figcaption>
     </figure>
   </div>
@@ -384,6 +392,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
       <p class="lede">Beacon never touches the real checkout. Every run happens in a disposable copy of the repository, torn down afterward.</p>
     </div>
     <figure class="diagram">
+      <div class="diagram-scroll">
       <svg viewBox="0 0 760 500" role="img" aria-label="Architecture diagram: the base commit is copied into a throwaway worktree, run through either a local Python environment for fast iteration or the exact Docker image the platform uses for parity, both paths feeding test.sh which writes JUnit XML, which a per-test classifier reads individually to produce a verdict.">
         <defs>
           <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -425,6 +434,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
         <text x="380" y="430" text-anchor="middle" font-size="12.5" class="dsvg-label" font-weight="600">Verdict</text>
         <text x="380" y="446" text-anchor="middle" font-size="10" class="dsvg-sub">ready, or each blocker named</text>
       </svg>
+      </div>
       <figcaption>Every check runs in a disposable git worktree, never the real checkout, through either a fast local environment or the platform's own Docker image, and the final verdict is built from individually counted test outcomes so a single quiet failure can't hide inside a passing summary line.</figcaption>
     </figure>
   </div>
@@ -445,6 +455,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
       </div>
     </div>
     <figure class="diagram" style="margin-top:28px">
+      <div class="diagram-scroll">
       <svg viewBox="0 0 900 360" role="img" aria-label="Before and after comparison: previously every team member's output folded into one anonymous stream with no way to tell who said what; now each member, including nested sub-teams, gets its own separate labeled message thread alongside the coordinator's.">
         <line x1="450" y1="10" x2="450" y2="350" stroke="var(--border)" stroke-dasharray="4 5"/>
         <text x="225" y="30" text-anchor="middle" font-size="13" class="dsvg-label" font-weight="600">Before</text>
@@ -491,6 +502,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
         <text x="675" y="330" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Two attributed threads</text>
         <text x="675" y="346" text-anchor="middle" font-size="10" class="dsvg-sub">each message owned by its member</text>
       </svg>
+      </div>
       <figcaption>Before, every member's output folded into one anonymous stream. After, each member &mdash; and each nested sub-team &mdash; keeps its own message thread, reasoning trace and attribution events, while the coordinator's own output stays a separate thread again.</figcaption>
     </figure>
   </div>
@@ -579,6 +591,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
       <h2>What Beacon does with the allocation</h2>
     </div>
     <figure class="diagram">
+      <div class="diagram-scroll">
       <svg viewBox="0 0 900 170" role="img" aria-label="Timeline of four phases: Foundation, complete; Scale Rollouts, next; Open-Model Calibration, and Published Methodology, both upcoming.">
         <line x1="40" y1="85" x2="860" y2="85" stroke="var(--border)" stroke-width="2"/>
         <!-- node 1: done, label above -->
@@ -605,6 +618,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
         <text x="810" y="130" text-anchor="middle" font-size="12.5" class="dsvg-label" font-weight="600">Published Method</text>
         <text x="810" y="146" text-anchor="middle" font-size="10" class="dsvg-sub">later</text>
       </svg>
+      </div>
       <figcaption>Phase 2 runs rollout batches in parallel on the DGX H200 allocation; phase 3 benchmarks an open-source solver model against the same tasks to see how closely a local result tracks the real one; phase 4 writes Beacon up as a framework other student projects can reuse.</figcaption>
     </figure>
   </div>
