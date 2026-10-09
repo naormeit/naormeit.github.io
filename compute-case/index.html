@@ -86,6 +86,9 @@ figcaption{margin-top:14px;font-size:.88rem;color:var(--fg-muted);max-width:68ch
 .card .split div p{font-size:.86rem;margin:0}
 .stacklist{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
 .stacklist span{font-family:var(--font-mono);font-size:.68rem;color:var(--fg-muted);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:2px 8px}
+.card .visit{display:inline-flex;align-items:center;gap:5px;margin-top:2px;font-family:var(--font-mono);font-size:.76rem;font-weight:600;color:var(--accent);text-decoration:none}
+.card .visit:hover{text-decoration:underline}
+.card .visit svg{width:11px;height:11px}
 
 table.compare{width:100%;border-collapse:collapse;font-size:.88rem}
 table.compare th,table.compare td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
@@ -269,6 +272,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <div class="today"><div class="h">Today</div><p>One laptop GPU, one model, one agent attempt at a time.</p></div>
           <div class="now"><div class="h">With DGX H200</div><p>Full rollout batches run in parallel &mdash; a believable solve-rate instead of a guess.</p></div>
         </div>
+        <a class="visit" href="https://naormeit.github.io/beacon/" target="_blank" rel="noopener">View Beacon <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10L10 6M10 6H6.5M10 6v3.5"/></svg></a>
       </div>
 
       <div class="card">
@@ -281,6 +285,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <div class="today"><div class="h">Today</div><p>Every routing decision and every retrieval call is a paid frontier API call.</p></div>
           <div class="now"><div class="h">With DGX H200</div><p>Local models absorb the routine decisions; load-test Council's logic thousands of times without the bill.</p></div>
         </div>
+        <a class="visit" href="https://github.com/naormeit/AETHER-AI" target="_blank" rel="noopener">View repository <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10L10 6M10 6H6.5M10 6v3.5"/></svg></a>
       </div>
 
       <div class="card">
@@ -293,6 +298,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <div class="today"><div class="h">Today</div><p>Its own demo proves the concept at 100 simulated agents; Azure mode spends credits per test.</p></div>
           <div class="now"><div class="h">With DGX H200</div><p>Collision tests scale to thousands of agents, with intent parsing run locally in development.</p></div>
         </div>
+        <a class="visit" href="https://github.com/naormeit/Loom-Protocol" target="_blank" rel="noopener">View repository <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10L10 6M10 6H6.5M10 6v3.5"/></svg></a>
       </div>
 
       <div class="card">
@@ -305,6 +311,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <div class="today"><div class="h">Today</div><p>Every receipt photo is a paid Gemini call &mdash; a real cost on a shopkeeper's thin margin.</p></div>
           <div class="now"><div class="h">With DGX H200</div><p>A local vision model does the same extraction at near-zero marginal cost per receipt.</p></div>
         </div>
+        <a class="visit" href="https://github.com/naormeit/Paytm-Sahayak-AI-" target="_blank" rel="noopener">View repository <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10L10 6M10 6H6.5M10 6v3.5"/></svg></a>
       </div>
 
       <div class="card">
@@ -317,6 +324,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
           <div class="today"><div class="h">Today</div><p>35 fuzz tests harden the contract; the assistant's guardrails are checked by hand, against real money.</p></div>
           <div class="now"><div class="h">With DGX H200</div><p>The same model runs locally to fuzz the assistant the way the contract is already fuzzed &mdash; thousands of adversarial drafts, not a handful.</p></div>
         </div>
+        <a class="visit" href="https://anvay-pay.vercel.app" target="_blank" rel="noopener">Try the live app <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10L10 6M10 6H6.5M10 6v3.5"/></svg></a>
       </div>
 
     </div>
@@ -344,6 +352,7 @@ footer::before{content:"";position:absolute;inset:0;background-image:radial-grad
 
 <section id="about">
   <div class="wrap">
+    <p class="lede" style="font-family:var(--font-display);font-size:1.3rem;color:var(--fg);margin-bottom:26px">Happy to walk through any of this in person.</p>
     <div class="credit">
       <div class="who">
         <svg width="44" height="44" viewBox="0 0 44 44" style="flex:none"><circle cx="22" cy="22" r="21" fill="var(--surface-2)" stroke="var(--border)"/><text x="22" y="28" text-anchor="middle" font-family="var(--font-display)" font-size="16" font-weight="600" fill="var(--accent)">NN</text></svg>
