@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Five shipped AI systems and the one shared compute ceiling behind all of them.">
+<title>Naorem Nganthoiba Singh</title>
+<style>
+/* layout: portfolio-as-argument — a hero claim, a funnel diagram, five project cards, one comparison table */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --surface-2:#EAEEF3; --fg:#13202E; --fg-muted:#51606F;
+  --border:#D8DEE6; --accent:#B07A1E; --accent-2:#2E5B8A; --good:#2F7A4F; --bad:#B23A2E;
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --font-body:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0A1220; --surface:#101A2B; --surface-2:#16233A; --fg:#EDF2F8; --fg-muted:#9BAAC0;
+    --border:#243350; --accent:#E3B35C; --accent-2:#7FB0E8; --good:#5FC489; --bad:#FF7A68;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A1220; --surface:#101A2B; --surface-2:#16233A; --fg:#EDF2F8; --fg-muted:#9BAAC0;
+  --border:#243350; --accent:#E3B35C; --accent-2:#7FB0E8; --good:#5FC489; --bad:#FF7A68;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);margin:0;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:24px}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-0.01em}
+h3{font-size:1.1rem}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+a{color:var(--accent-2)}
+.lede{font-size:1.05rem;color:var(--fg-muted);max-width:66ch}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.brand{font-family:var(--font-display);font-weight:600;font-size:1.02rem}
+.navlinks{display:flex;gap:20px;font-size:.84rem;overflow-x:auto;scrollbar-width:none}
+.navlinks a{color:var(--fg-muted);text-decoration:none;white-space:nowrap}
+.navlinks a:hover{color:var(--fg)}
+
+section{padding-block:clamp(44px,7vw,84px)}
+.hero{padding-top:clamp(52px,9vw,100px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-10% -10% auto -10%;height:140%;background-image:radial-gradient(circle, var(--border) 1px, transparent 1px);background-size:30px 30px;opacity:.5;mask-image:radial-gradient(ellipse 60% 50% at 80% 10%, black, transparent 72%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 80% 10%, black, transparent 72%);pointer-events:none}
+.hero h1{font-size:clamp(2.2rem,5.6vw,3.8rem);line-height:1.05;letter-spacing:-0.02em}
+.hero .lede{font-size:1.12rem;margin-top:18px}
+.hero-meta{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap}
+.chip{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;border:1px solid var(--border);border-radius:99px;padding:6px 14px;color:var(--fg-muted)}
+.chip.chip-accent{border-color:var(--accent);color:var(--accent)}
+
+.section-head{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+
+figure{margin:0}
+figure.diagram{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:clamp(16px,3vw,30px)}
+figure.diagram svg{width:100%;height:auto;display:block;overflow:visible}
+figcaption{margin-top:14px;font-size:.88rem;color:var(--fg-muted);max-width:68ch}
+.dsvg-box{fill:var(--surface-2);stroke:var(--border)}
+.dsvg-box-active{fill:var(--surface-2);stroke:var(--accent)}
+.dsvg-label{fill:var(--fg);font-family:var(--font-body)}
+.dsvg-sub{fill:var(--fg-muted);font-family:var(--font-body)}
+.dsvg-edge{stroke:var(--fg-muted);fill:none}
+
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+@media (max-width:820px){.cards{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.card.flagship{border-color:var(--accent);grid-column:1 / -1}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card h3{font-size:1.2rem}
+.card .kicker{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted)}
+.card p{color:var(--fg-muted);font-size:.92rem}
+.card .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;padding-top:14px;border-top:1px dashed var(--border)}
+@media (max-width:560px){.card .split{grid-template-columns:1fr}}
+.card .split .h{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.card .split .today .h{color:var(--fg-muted)}
+.card .split .now .h{color:var(--accent)}
+.card .split div p{font-size:.86rem;margin:0}
+.stacklist{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.stacklist span{font-family:var(--font-mono);font-size:.68rem;color:var(--fg-muted);background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:2px 8px}
+
+table.compare{width:100%;border-collapse:collapse;font-size:.88rem}
+table.compare th,table.compare td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+table.compare th{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted);font-weight:600}
+table.compare td:first-child{font-weight:600;white-space:nowrap}
+table.compare tbody tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:6px 10px}
+
+.credit{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between;border-top:1px solid var(--border);padding-top:28px;margin-top:10px}
+.credit .who{font-size:.95rem;display:flex;gap:14px;align-items:flex-start}
+.credit .who b{font-family:var(--font-display);font-size:1.05rem;font-weight:600}
+.credit .meta{color:var(--fg-muted);font-size:.86rem;margin-top:4px}
+.footnote{color:var(--fg-muted);font-size:.82rem;max-width:64ch;margin-top:22px}
+
+footer{border-top:1px solid var(--border);padding-block:26px;color:var(--fg-muted);font-size:.8rem;position:relative;overflow:hidden}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative}
+footer::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle, var(--border) 1px, transparent 1px);background-size:22px 22px;opacity:.5;pointer-events:none}
+
+/* reading rail, side scrollspy nav, section counter, giant background numerals */
+.wrap{position:relative;z-index:1}
+.has-watermark{position:relative;overflow:hidden}
+.watermark{position:absolute;right:clamp(-20px,-2vw,10px);top:50%;transform:translateY(-50%);pointer-events:none;user-select:none;font-family:var(--font-display);font-weight:600;color:var(--fg);opacity:.045;font-size:clamp(7rem,18vw,15rem);line-height:.8;letter-spacing:-0.02em;z-index:0;white-space:nowrap}
+@media (max-width:760px){.watermark{display:none}}
+
+#progress-track{position:fixed;top:0;left:0;width:3px;height:100%;z-index:60;pointer-events:none}
+#progress-fill{width:100%;height:100vh;background:var(--accent);transform-origin:top;transform:scaleY(0);will-change:transform}
+
+.sidenav{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:13px;align-items:flex-end}
+@media (max-width:1320px){.sidenav{display:none}}
+.sidenav a{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--fg-muted);font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase}
+.sidenav a .dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .2s,transform .2s;flex:none}
+.sidenav a .label{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .25s ease,opacity .2s;opacity:0;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:3px 0}
+.sidenav a:hover .label,.sidenav a.active .label{max-width:150px;opacity:1;padding:3px 9px}
+.sidenav a.active{color:var(--fg)}
+.sidenav a.active .dot{background:var(--accent);transform:scale(1.7)}
+
+#scroll-counter{position:fixed;bottom:22px;right:27px;z-index:30;font-family:var(--font-mono);font-size:.64rem;color:var(--fg-muted);letter-spacing:.04em}
+@media (max-width:1320px){#scroll-counter{display:none}}
+</style>
+</head>
+<body style="margin:0">
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<nav>
+  <div class="wrap">
+    <div class="brand">Naorem Nganthoiba Singh</div>
+    <div class="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#pattern">The Pattern</a>
+      <a href="#projects">Projects</a>
+      <a href="#compare">Comparison</a>
+      <a href="#about">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div id="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
+<nav class="sidenav" aria-label="Section progress">
+  <a href="#overview" data-sec="overview"><span class="dot"></span><span class="label">Overview</span></a>
+  <a href="#pattern" data-sec="pattern"><span class="dot"></span><span class="label">The Pattern</span></a>
+  <a href="#projects" data-sec="projects"><span class="dot"></span><span class="label">Projects</span></a>
+  <a href="#compare" data-sec="compare"><span class="dot"></span><span class="label">Comparison</span></a>
+  <a href="#about" data-sec="about"><span class="dot"></span><span class="label">Contact</span></a>
+</nav>
+<div id="scroll-counter"><span id="sc-cur">01</span>/<span id="sc-total">05</span></div>
+
+<header class="hero" id="overview">
+  <div class="wrap">
+    <div class="eyebrow">Independent Research Portfolio &middot; Alliance University</div>
+    <h1>Five systems.<br>One shared ceiling.</h1>
+    <p class="lede">Everything on this page is a real, working system &mdash; built for different hackathons and different problems: fintech credit, cross-border remittance, agent economics, AI orchestration. None of them were planned around a shared infrastructure gap. All five ran into it anyway.</p>
+    <div class="hero-meta">
+      <span class="chip chip-accent">5 shipped systems</span>
+      <span class="chip">4 depend on paid cloud AI APIs today</span>
+      <span class="chip">1 local verification engine already built</span>
+    </div>
+  </div>
+</header>
+
+<section id="pattern" class="has-watermark">
+  <div class="watermark" aria-hidden="true">01</div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Why this page exists</div>
+      <h2>The same wall, five times</h2>
+      <p class="lede">A laptop can run one small model, slowly. Past that, every test, every stress run and every evaluation has to go through a paid API with a rate limit on it. That gap is what a GPU allocation closes &mdash; for all five of these at once, not just one.</p>
+    </div>
+    <figure class="diagram">
+      <svg viewBox="0 0 1000 420" role="img" aria-label="Funnel diagram: five independent projects — Beacon, Aether AI, Loom Protocol, Sahayak AI and Anvay — all converge on the same shared ceiling of paid cloud APIs and a single consumer GPU; a DGX H200 allocation replaces that ceiling and fans out into local open models, agents tested at scale, and near-zero marginal cost per run.">
+        <defs>
+          <marker id="pf-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g class="dsvg-edge" style="color:var(--fg-muted)">
+          <line x1="80" y1="62" x2="430" y2="150" marker-end="url(#pf-arrow)"/>
+          <line x1="290" y1="62" x2="460" y2="150" marker-end="url(#pf-arrow)"/>
+          <line x1="500" y1="62" x2="500" y2="150" marker-end="url(#pf-arrow)"/>
+          <line x1="710" y1="62" x2="540" y2="150" marker-end="url(#pf-arrow)"/>
+          <line x1="920" y1="62" x2="570" y2="150" marker-end="url(#pf-arrow)"/>
+          <line x1="500" y1="206" x2="500" y2="244" marker-end="url(#pf-arrow)"/>
+        </g>
+        <g style="color:var(--accent)">
+          <line x1="420" y1="300" x2="300" y2="340" class="dsvg-edge" style="color:var(--accent)" marker-end="url(#pf-arrow)"/>
+          <line x1="500" y1="300" x2="500" y2="340" class="dsvg-edge" style="color:var(--accent)" marker-end="url(#pf-arrow)"/>
+          <line x1="580" y1="300" x2="700" y2="340" class="dsvg-edge" style="color:var(--accent)" marker-end="url(#pf-arrow)"/>
+        </g>
+
+        <!-- five project nodes -->
+        <rect x="10" y="10" width="140" height="52" rx="10" class="dsvg-box-active"/>
+        <text x="80" y="31" text-anchor="middle" font-size="12" class="dsvg-label" font-weight="600">Beacon</text>
+        <text x="80" y="47" text-anchor="middle" font-size="9.5" class="dsvg-sub">agent evaluation</text>
+
+        <rect x="220" y="10" width="140" height="52" rx="10" class="dsvg-box"/>
+        <text x="290" y="31" text-anchor="middle" font-size="12" class="dsvg-label" font-weight="600">Aether AI</text>
+        <text x="290" y="47" text-anchor="middle" font-size="9.5" class="dsvg-sub">multi-model routing</text>
+
+        <rect x="430" y="10" width="140" height="52" rx="10" class="dsvg-box"/>
+        <text x="500" y="31" text-anchor="middle" font-size="12" class="dsvg-label" font-weight="600">Loom Protocol</text>
+        <text x="500" y="47" text-anchor="middle" font-size="9.5" class="dsvg-sub">agent concurrency</text>
+
+        <rect x="640" y="10" width="140" height="52" rx="10" class="dsvg-box"/>
+        <text x="710" y="31" text-anchor="middle" font-size="12" class="dsvg-label" font-weight="600">Sahayak AI</text>
+        <text x="710" y="47" text-anchor="middle" font-size="9.5" class="dsvg-sub">vision-to-ledger</text>
+
+        <rect x="850" y="10" width="140" height="52" rx="10" class="dsvg-box"/>
+        <text x="920" y="31" text-anchor="middle" font-size="12" class="dsvg-label" font-weight="600">Anvay</text>
+        <text x="920" y="47" text-anchor="middle" font-size="9.5" class="dsvg-sub">payment drafting</text>
+
+        <!-- shared ceiling -->
+        <rect x="320" y="150" width="360" height="56" rx="10" fill="var(--surface-2)" stroke="var(--bad)"/>
+        <text x="500" y="172" text-anchor="middle" font-size="13" class="dsvg-label" font-weight="600">Shared ceiling</text>
+        <text x="500" y="190" text-anchor="middle" font-size="10.5" class="dsvg-sub">paid cloud APIs + one 8GB consumer GPU</text>
+
+        <!-- DGX allocation -->
+        <rect x="370" y="244" width="260" height="56" rx="10" fill="var(--surface-2)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="500" y="266" text-anchor="middle" font-size="13" class="dsvg-label" font-weight="600">DGX H200 Allocation</text>
+        <text x="500" y="284" text-anchor="middle" font-size="10.5" class="dsvg-sub">approved by AU-QUASAR</text>
+
+        <!-- fan-out outcomes -->
+        <rect x="180" y="340" width="200" height="54" rx="10" class="dsvg-box"/>
+        <text x="280" y="362" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Local open models</text>
+        <text x="280" y="378" text-anchor="middle" font-size="9.5" class="dsvg-sub">no per-call cloud cost</text>
+
+        <rect x="400" y="340" width="200" height="54" rx="10" class="dsvg-box"/>
+        <text x="500" y="362" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Agents at scale</text>
+        <text x="500" y="378" text-anchor="middle" font-size="9.5" class="dsvg-sub">hundreds in parallel, not one</text>
+
+        <rect x="620" y="340" width="200" height="54" rx="10" class="dsvg-box"/>
+        <text x="720" y="362" text-anchor="middle" font-size="11.5" class="dsvg-label" font-weight="600">Near-zero marginal cost</text>
+        <text x="720" y="378" text-anchor="middle" font-size="9.5" class="dsvg-sub">per test, per receipt, per run</text>
+      </svg>
+      <figcaption>Five independently-built systems, each hitting the same wall from a different direction, all closed by the same allocation.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="projects" class="has-watermark">
+  <div class="watermark" aria-hidden="true">05</div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The portfolio</div>
+      <h2>What each one needs, and what changes</h2>
+    </div>
+    <div class="cards">
+
+      <div class="card flagship">
+        <div class="top">
+          <div>
+            <div class="kicker">Flagship &middot; this allocation's first proof</div>
+            <h3>Beacon</h3>
+          </div>
+        </div>
+        <p>A rigor engine for evaluating AI coding agents: a task-design discipline, a local verification pipeline, and a real open-source feature it proved itself on &mdash; 140 regression tests kept green, 52 new behaviors verified, shipped into Agno.</p>
+        <div class="stacklist"><span>Python</span><span>Docker</span><span>pytest</span><span>Ollama</span></div>
+        <div class="split">
+          <div class="today"><div class="h">Today</div><p>One laptop GPU, one model, one agent attempt at a time.</p></div>
+          <div class="now"><div class="h">With DGX H200</div><p>Full rollout batches run in parallel &mdash; a believable solve-rate instead of a guess.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div><div class="kicker">Multi-agent orchestration</div><h3>Aether AI</h3></div>
+        </div>
+        <p>A hierarchical system &mdash; Council, Veritas, Arbiter &mdash; that decomposes a financial query, grounds it in retrieved context, and routes each step to GPT-4, Claude or Gemini depending on what it needs.</p>
+        <div class="stacklist"><span>TypeScript</span><span>RAG</span><span>PostgreSQL</span><span>GPT-4 / Claude / Gemini</span></div>
+        <div class="split">
+          <div class="today"><div class="h">Today</div><p>Every routing decision and every retrieval call is a paid frontier API call.</p></div>
+          <div class="now"><div class="h">With DGX H200</div><p>Local models absorb the routine decisions; load-test Council's logic thousands of times without the bill.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div><div class="kicker">Agent economics &middot; Microsoft Imagine Cup</div><h3>Loom Protocol</h3></div>
+        </div>
+        <p>An atomic transaction layer that lets many autonomous agents compete for one scarce resource &mdash; a limited-inventory drop &mdash; without duplicate reservations or retry storms, built on Azure AI Foundry.</p>
+        <div class="stacklist"><span>Python</span><span>Azure OpenAI</span><span>Content Safety</span><span>Cosmos DB</span></div>
+        <div class="split">
+          <div class="today"><div class="h">Today</div><p>Its own demo proves the concept at 100 simulated agents; Azure mode spends credits per test.</p></div>
+          <div class="now"><div class="h">With DGX H200</div><p>Collision tests scale to thousands of agents, with intent parsing run locally in development.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div><div class="kicker">SMB credit &middot; India MSME</div><h3>Sahayak AI</h3></div>
+        </div>
+        <p>An "autonomous khata": photograph a kirana store's handwritten receipt and it becomes a digital ledger entry, with an agentic morning briefing and a 0&ndash;100 credit score built from real repayment history.</p>
+        <div class="stacklist"><span>Next.js</span><span>FastAPI</span><span>Gemini 1.5 Flash</span></div>
+        <div class="split">
+          <div class="today"><div class="h">Today</div><p>Every receipt photo is a paid Gemini call &mdash; a real cost on a shopkeeper's thin margin.</p></div>
+          <div class="now"><div class="h">With DGX H200</div><p>A local vision model does the same extraction at near-zero marginal cost per receipt.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div><div class="kicker">Cross-border remittance &middot; Monad</div><h3>Anvay</h3></div>
+        </div>
+        <p>Claim-link payments: type an amount, share a link on WhatsApp, and the recipient taps to collect in seconds. The escrow contract is covered by 35 Foundry tests &mdash; fuzzing, replay, front-running. Its one AI surface, the Hinglish assistant that drafts each transfer, has no matching coverage yet.</p>
+        <div class="stacklist"><span>Solidity</span><span>Next.js</span><span>Qwen via Groq</span></div>
+        <div class="split">
+          <div class="today"><div class="h">Today</div><p>35 fuzz tests harden the contract; the assistant's guardrails are checked by hand, against real money.</p></div>
+          <div class="now"><div class="h">With DGX H200</div><p>The same model runs locally to fuzz the assistant the way the contract is already fuzzed &mdash; thousands of adversarial drafts, not a handful.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">At a glance</div>
+      <h2>The constraint, side by side</h2>
+    </div>
+    <div class="tablewrap">
+      <table class="compare">
+        <tr><th>Project</th><th>Today</th><th>With the DGX H200 allocation</th></tr>
+        <tr><td>Beacon</td><td>One laptop GPU, one agent attempt at a time</td><td>Full rollout batches run in parallel</td></tr>
+        <tr><td>Aether AI</td><td>Every routing and retrieval call is a paid API call</td><td>Local models absorb routine decisions at scale</td></tr>
+        <tr><td>Loom Protocol</td><td>100-agent demo; Azure credits spent per test run</td><td>Thousands of agents; local intent parsing in dev</td></tr>
+        <tr><td>Sahayak AI</td><td>Every receipt costs a paid Gemini call</td><td>Local vision model, near-zero cost per receipt</td></tr>
+        <tr><td>Anvay</td><td>Contract fuzzed 35 ways; AI guardrails checked by hand</td><td>Assistant fuzzed thousands of ways, same as the contract</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="credit">
+      <div class="who">
+        <svg width="44" height="44" viewBox="0 0 44 44" style="flex:none"><circle cx="22" cy="22" r="21" fill="var(--surface-2)" stroke="var(--border)"/><text x="22" y="28" text-anchor="middle" font-family="var(--font-display)" font-size="16" font-weight="600" fill="var(--accent)">NN</text></svg>
+        <div>
+          <b>Naorem Nganthoiba Singh</b>
+          <div class="meta">V BTech 2024 &middot; Computer Science and Engineering (SPE) &middot; Reg. No. 2411021060007</div>
+          <div class="meta">Alliance University &middot; AU&#8209;QUASAR</div>
+          <div class="meta"><a href="https://naormeit.github.io" target="_blank" rel="noopener">Full portfolio</a> &middot; <a href="https://naormeit.github.io/beacon/" target="_blank" rel="noopener">Beacon</a></div>
+        </div>
+      </div>
+      <div class="who" style="text-align:right;display:block">
+        <div class="meta">nnaoremBTECH24@ced.alliance.edu.in</div>
+        <div class="meta">9310256362</div>
+      </div>
+    </div>
+    <p class="footnote">Every figure on this page is drawn from each project's own repository and README as of this write-up. Aether AI, Loom Protocol and Anvay call paid third-party AI APIs by design; nothing here claims those calls have already been replaced, only what becomes possible once local compute is available.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Naorem Nganthoiba Singh</span>
+    <span>Independent research portfolio &middot; Alliance University</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var fill=document.getElementById('progress-fill');
+  function updateProgress(){
+    var doc=document.documentElement;
+    var scrollTop=doc.scrollTop||document.body.scrollTop;
+    var height=doc.scrollHeight-doc.clientHeight;
+    var pct=height>0?Math.min(1,scrollTop/height):0;
+    if(fill) fill.style.transform='scaleY('+pct+')';
+  }
+  document.addEventListener('scroll',updateProgress,{passive:true});
+  window.addEventListener('resize',updateProgress);
+  updateProgress();
+
+  var links=[].slice.call(document.querySelectorAll('.sidenav a'));
+  var ids=links.map(function(a){return a.getAttribute('data-sec')});
+  var sections=ids.map(function(id){return document.getElementById(id)}).filter(Boolean);
+  var curEl=document.getElementById('sc-cur');
+  var totalEl=document.getElementById('sc-total');
+  if(totalEl) totalEl.textContent=String(sections.length).padStart(2,'0');
+
+  if('IntersectionObserver' in window){
+    var observer=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var id=entry.target.id;
+          links.forEach(function(a){a.classList.toggle('active',a.getAttribute('data-sec')===id)});
+          var idx=ids.indexOf(id);
+          if(curEl && idx>-1) curEl.textContent=String(idx+1).padStart(2,'0');
+        }
+      });
+    },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+    sections.forEach(function(s){observer.observe(s)});
+  }
+})();
+</script>
+
+</body>
+</html>
